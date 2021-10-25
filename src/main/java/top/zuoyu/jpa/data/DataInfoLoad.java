@@ -3,6 +3,7 @@ package top.zuoyu.jpa.data;
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
 import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -15,6 +16,7 @@ import org.springframework.util.CollectionUtils;
 import top.zuoyu.jpa.data.enums.TableMeta;
 import top.zuoyu.jpa.data.enums.TableType;
 import top.zuoyu.jpa.data.model.Column;
+import top.zuoyu.jpa.data.model.Index;
 import top.zuoyu.jpa.data.model.Table;
 import top.zuoyu.jpa.exception.CustomException;
 
@@ -101,6 +103,15 @@ public class DataInfoLoad {
                 if (Objects.nonNull(columnsResultSet)) {
                     while (columnsResultSet.next()) {
                         Column.create(table, columnsResultSet);
+                    }
+                }
+            }
+
+//            获取表的索引
+            try (ResultSet dataIndexInfo = databaseMetaData.getIndexInfo(catalog, schema, tableName, false, false)) {
+                if (Objects.nonNull(dataIndexInfo)) {
+                    while (dataIndexInfo.next()) {
+                        Index.create(table, dataIndexInfo);
                     }
                 }
             }

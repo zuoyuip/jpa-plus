@@ -23,10 +23,15 @@ public class Table implements Serializable, Cloneable {
 
 
     private static final long serialVersionUID = -4366205923949656662L;
+
     /**
      * 主键列表
      */
     private final Set<String> primaryKeys = new LinkedHashSet<>();
+    /**
+     * 索引列表
+     */
+    private final Set<Index> indexs = new LinkedHashSet<>();
     /**
      * 所有列信息
      */
@@ -190,6 +195,10 @@ public class Table implements Serializable, Cloneable {
         this.columns.put(column.getColumnName(), column);
     }
 
+    public void addIndex(Index index) {
+        this.indexs.add(index);
+    }
+
     /**
      * 获取某列信息
      *
@@ -198,6 +207,10 @@ public class Table implements Serializable, Cloneable {
      */
     public Column getColumn(String columnName) {
         return this.columns.get(columnName);
+    }
+
+    public Set<Index> getIndexs() {
+        return indexs;
     }
 
     /**

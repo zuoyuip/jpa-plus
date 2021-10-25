@@ -35,8 +35,11 @@ class JpaPlusApplicationTests {
             Connection connection = dataSource.getConnection();
             List<Table> tables = DataInfoLoad.getTables(connection);
             tables.forEach(table -> {
-                ModelStructure.registerEntity(table);
+                table.getIndexs().forEach(System.out::println);
             });
+//            tables.forEach(table -> {
+//                ModelStructure.registerEntity(table);
+//            });
         } catch (SQLException e) {
             e.printStackTrace();
         }
