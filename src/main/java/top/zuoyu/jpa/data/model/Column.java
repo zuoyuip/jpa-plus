@@ -4,6 +4,9 @@ import java.io.Serializable;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import javax.persistence.GeneratedValue;
+import javax.persistence.Index;
+
 import org.springframework.lang.NonNull;
 
 import top.zuoyu.jpa.data.enums.ColumnMeta;
@@ -28,6 +31,7 @@ public class Column implements Serializable, Cloneable {
     /**
      * 表模式,在oracle中获取的是命名空间
      */
+    @GeneratedValue
     private String tableSchema;
 
     /**
@@ -53,12 +57,12 @@ public class Column implements Serializable, Cloneable {
     /**
      * 列大小
      */
-    private String columnSize;
+    private Integer columnSize;
 
     /**
      * 缓冲长度
      */
-    private String bufferLength;
+    private Long bufferLength;
 
     /**
      * 小数位数
@@ -219,19 +223,19 @@ public class Column implements Serializable, Cloneable {
         this.typeName = typeName;
     }
 
-    public String getColumnSize() {
-        return this.columnSize;
+    public Integer getColumnSize() {
+        return columnSize;
     }
 
-    public void setColumnSize(String columnSize) {
+    public void setColumnSize(Integer columnSize) {
         this.columnSize = columnSize;
     }
 
-    public String getBufferLength() {
-        return this.bufferLength;
+    public Long getBufferLength() {
+        return bufferLength;
     }
 
-    public void setBufferLength(String bufferLength) {
+    public void setBufferLength(Long bufferLength) {
         this.bufferLength = bufferLength;
     }
 
@@ -378,8 +382,8 @@ public class Column implements Serializable, Cloneable {
         this.setColumnName(resultSet.getString(ColumnMeta.COLUMN_NAME.value()));
         this.setDataType(resultSet.getString(ColumnMeta.DATA_TYPE.value()));
         this.setTypeName(resultSet.getString(ColumnMeta.TYPE_NAME.value()));
-        this.setColumnSize(resultSet.getString(ColumnMeta.COLUMN_SIZE.value()));
-        this.setBufferLength(resultSet.getString(ColumnMeta.BUFFER_LENGTH.value()));
+        this.setColumnSize(resultSet.getInt(ColumnMeta.COLUMN_SIZE.value()));
+        this.setBufferLength(resultSet.getLong(ColumnMeta.BUFFER_LENGTH.value()));
         this.setDecimalDigits(resultSet.getString(ColumnMeta.DECIMAL_DIGITS.value()));
         this.setNumPrecRadix(resultSet.getString(ColumnMeta.NUM_PREC_RADIX.value()));
         this.setNullable(resultSet.getString(ColumnMeta.NULLABLE.value()));

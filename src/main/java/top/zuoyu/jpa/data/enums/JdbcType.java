@@ -22,14 +22,14 @@ import java.util.concurrent.ConcurrentHashMap;
 public enum JdbcType {
 
     ARRAY(java.sql.Types.ARRAY, Array.class), //
-    BIT(java.sql.Types.BIT, Boolean.TYPE), //
-    TINYINT(java.sql.Types.TINYINT, Byte.TYPE), //
-    SMALLINT(java.sql.Types.SMALLINT, Short.TYPE), //
-    INTEGER(java.sql.Types.INTEGER, Integer.TYPE), //
-    BIGINT(java.sql.Types.BIGINT, Long.TYPE), //
-    FLOAT(java.sql.Types.FLOAT, Double.TYPE), //
-    REAL(java.sql.Types.REAL, Float.TYPE), //
-    DOUBLE(java.sql.Types.DOUBLE, Double.TYPE), //
+    BIT(java.sql.Types.BIT, Boolean.class), //
+    TINYINT(java.sql.Types.TINYINT, Byte.class), //
+    SMALLINT(java.sql.Types.SMALLINT, Short.class), //
+    INTEGER(java.sql.Types.INTEGER, Integer.class), //
+    BIGINT(java.sql.Types.BIGINT, Long.class), //
+    FLOAT(java.sql.Types.FLOAT, Double.class), //
+    REAL(java.sql.Types.REAL, Float.class), //
+    DOUBLE(java.sql.Types.DOUBLE, Double.class), //
     NUMERIC(java.sql.Types.NUMERIC, BigDecimal.class), //
     DECIMAL(java.sql.Types.DECIMAL, BigDecimal.class), //
     CHAR(java.sql.Types.CHAR, String.class), //

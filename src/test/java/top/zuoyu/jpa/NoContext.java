@@ -1,6 +1,7 @@
 package top.zuoyu.jpa;
 
 import java.io.File;
+import java.util.Date;
 
 import org.junit.jupiter.api.Test;
 
@@ -18,6 +19,7 @@ public class NoContext {
     @Test
     public void loadClassPath() {
 //        System.out.println(ClassUtil.getBasePath());
-        System.out.println(JdbcType.valueOf(12).getJavaType().getName());
+//        System.out.println(JdbcType.valueOf(12).getJavaType().getName());
+        System.out.println(JdbcType.INTEGER.getJavaType().isAssignableFrom(Date.class));
     }
 }

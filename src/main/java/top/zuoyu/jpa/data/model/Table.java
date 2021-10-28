@@ -6,10 +6,15 @@ import java.sql.SQLException;
 import java.util.Collection;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import org.springframework.lang.NonNull;
+import org.springframework.util.CollectionUtils;
 
 import top.zuoyu.jpa.data.enums.TableMeta;
 
@@ -24,6 +29,8 @@ public class Table implements Serializable, Cloneable {
 
     private static final long serialVersionUID = -4366205923949656662L;
 
+    private static final String SPLIT_CHARS = ", ";
+
     /**
      * 主键列表
      */
@@ -31,7 +38,7 @@ public class Table implements Serializable, Cloneable {
     /**
      * 索引列表
      */
-    private final Set<Index> indexs = new LinkedHashSet<>();
+    private final List<Index> indexs = new LinkedList<>();
     /**
      * 所有列信息
      */
@@ -195,8 +202,23 @@ public class Table implements Serializable, Cloneable {
         this.columns.put(column.getColumnName(), column);
     }
 
+    /**
+     * 添加索引对象
+     *
+     * @param index - 索引对象
+     */
     public void addIndex(Index index) {
-        this.indexs.add(index);
+        List<Index> indexList = this.indexs.stream().filter(item -> {
+            String indexName = item.getIndexName();
+            return Objects.nonNull(indexName) && indexName.equals(index.getIndexName());
+        }).collect(Collectors.toList());
+
+        if (CollectionUtils.isEmpty(indexList)) {
+            this.indexs.add(index);
+            return;
+        }
+
+        indexList.forEach(item -> item.setColumnName(item.getColumnName() + SPLIT_CHARS + index.getColumnName()));
     }
 
     /**
@@ -209,12 +231,13 @@ public class Table implements Serializable, Cloneable {
         return this.columns.get(columnName);
     }
 
-    public Set<Index> getIndexs() {
+    public List<Index> getIndexs() {
         return indexs;
     }
 
     /**
      * 通过tablesResultSet加载值
+     *
      * @param tablesResultSet - 表元信息
      * @throws SQLException - 向上抛出
      */
